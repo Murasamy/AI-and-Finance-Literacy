@@ -1,0 +1,115 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>内容智能生产平台</title>
+  {{!--
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
+  <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+  <script type="text/javascript" src="/javascript/indexMainPage.js"></script>
+  {{#head}}
+  
+  {{/head}}
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/aiMainPageModel1">
+      <img src="/img/iChongqingLogo.jpg" alt="" style="height: 40px; width:auto;">
+      
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {{#if isUser}}
+        <li class="nav-item aiChat" style="margin-right: 15px;">
+          <a class="nav-link topbar aiChatTitle" href="/aiMainPageModel1">智能写作</a>
+        </li>
+        {{!-- <li class="nav-item">
+          <a class="nav-link" href="/draftMainPage">智能写稿</a>
+        </li> --}}
+        <li class="nav-item vTuber" style="margin-right: 15px;">
+          <a class="nav-link topbar vTuberTitle" href="/vtuberMainPage">虚拟主播</a>
+        </li>
+        <li class="nav-item aiPaint" style="margin-right: 15px;">
+          <a class="nav-link topbar aiPaintTitle" href="/aiPaintMainPage">AI绘画</a>
+        </li> 
+        {{/if}}
+        {{#if isAgent}}
+        <li class="nav-item aiChat" style="margin-right: 15px;">
+          <a class="nav-link topbar aiChatTitle" href="/aiMainPageModel1">智能写稿</a>
+        </li>
+        {{!-- <li class="nav-item">
+          <a class="nav-link" href="/draftMainPage">智能写稿</a>
+        </li> --}}
+        <li class="nav-item vTuber" style="margin-right: 15px;">
+          <a class="nav-link topbar vTuberTitle" href="/vtuberMainPage">虚拟主播</a>
+        </li>
+        <li class="nav-item aiPaint" style="margin-right: 15px;">
+          <a class="nav-link topbar aiPaintTitle" href="/aiPaintMainPage">AI绘画</a>
+        </li> 
+        <li class="nav-item" style="margin-right: 15px;"> 
+          <a class="nav-link topbar" href="/agentIndex">管理员页面</a>
+        </li>
+        {{/if}}
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        {{#if user}}
+        <li class="nav-item">
+          <a class="nav-link disabled" href="/">欢迎您，{{user.username}}</a>
+        </li>
+
+        <form method="POST" class="form-inline my-2 my-lg-0" action="/logout" id="logout-form"> |
+          <button class="btn btn-secondary ml-2" type="submit" id="logout-btn">登出</button>
+        </form>
+
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/login">请登录</a>
+        </li>
+        {{/if}}
+      </ul>
+
+    </div>
+  </nav>
+
+  {{{body}}}
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    var url = window.location.href;
+    if (url.endsWith("aiMainPageModel1")) {
+      var aiChat = document.getElementsByClassName("aiChat")[0];
+      aiChat.style.backgroundColor = "rgb(76, 150, 211)";
+      var aiChatTitle = document.getElementsByClassName("aiChatTitle")[0];
+      aiChatTitle.style.color = "#fff";
+    } else if (url.endsWith("vtuberMainPage")) {
+      var vTuber = document.getElementsByClassName("vTuber")[0];
+      vTuber.style.backgroundColor = "rgb(76, 150, 211)";
+      var vTuberTitle = document.getElementsByClassName("vTuberTitle")[0];
+      vTuberTitle.style.color = "#fff";
+    } else if (url.endsWith("aiPaintMainPage")) {
+      var aiPaint = document.getElementsByClassName("aiPaint")[0];
+      aiPaint.style.backgroundColor = "rgb(76, 150, 211)";
+      var aiPaintTitle = document.getElementsByClassName("aiPaintTitle")[0];
+      aiPaintTitle.style.color = "#fff";
+    }
+  </script>
+  
+</body>
+
+</html>
