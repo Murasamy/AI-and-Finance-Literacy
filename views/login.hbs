@@ -1,0 +1,17 @@
+{{#if message}}
+<div class="alert alert-primary" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+<div class="container mx-auto mt-5" style="max-width: 400px;">
+
+    <form action="/accessTokenLogin" method="POST">
+        <div class="form-group">
+            <label for="usernameInput">Access Token</label>
+            <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Access Token">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+    </form>
+</div>

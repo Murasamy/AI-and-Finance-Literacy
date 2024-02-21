@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+    <form method="POST" action="" class="form-inline mt-3" >
+        <div class="form-group mx-sm-3 mb-2">
+            {{!-- <label for="airlineNumber" class="ml-3">Airline Number:</label> --}}
+            <input type="text" class="form-control ml-2" id="username" name="username" placeholder="姓名">
+
+            {{!-- <label for="toLocation" class="ml-3">To:</label> --}}
+            <select class="form-select mb-0 fw-bold" id="userType" name="测试次数"
+                style="background-color: transparent; border: none;">
+                <option value="1">用户</option>
+                <option value="2">管理员</option>
+                <option value="3">管理员</option>
+                <option value="4">管理员</option>
+                <option value="5">管理员</option>
+                <option value="6">管理员</option>
+                <option value="7">管理员</option>
+            </select>
+
+            {{!-- <label for="takeOffTime" class="ml-3">Take Off Date:</label> --}}
+            <input type="text" class="form-control ml-2" id="nickName" name="nickName" placeholder="昵称">
+
+
+            <select class="form-select mb-0 fw-bold" id="userType" name="权限"
+                style="background-color: transparent; border: none;">
+                <option value="user">用户</option>
+                <option value="agent">管理员</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2 ml-4" id="addUserPhoneBtn">生成Token</button>
+    </form>
+</div>
