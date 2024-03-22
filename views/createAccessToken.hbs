@@ -1,23 +1,25 @@
+<script type="text/javascript" src="/javascript/createAccessToken.js"></script>
+
 <div class="d-flex justify-content-center">
-    <form method="POST" action="" class="form-inline mt-3" >
+    <form method="POST" action="" class="form-inline mt-3">
         <div class="form-group mx-sm-3 mb-2">
             {{!-- <label for="airlineNumber" class="ml-3">Airline Number:</label> --}}
             <input type="text" class="form-control ml-2" id="username" name="username" placeholder="姓名">
 
             {{!-- <label for="toLocation" class="ml-3">To:</label> --}}
-            <select class="form-select mb-0 fw-bold" id="userType" name="测试次数"
+            <select class="form-select mb-0 fw-bold" id="testCount" name="testCount"
                 style="background-color: transparent; border: none;">
-                <option value="1">用户</option>
-                <option value="2">管理员</option>
-                <option value="3">管理员</option>
-                <option value="4">管理员</option>
-                <option value="5">管理员</option>
-                <option value="6">管理员</option>
-                <option value="7">管理员</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
             </select>
 
             {{!-- <label for="takeOffTime" class="ml-3">Take Off Date:</label> --}}
-            <input type="text" class="form-control ml-2" id="nickName" name="nickName" placeholder="昵称">
+            {{!-- <input type="text" class="form-control ml-2" id="nickName" name="nickName" placeholder="昵称"> --}}
 
 
             <select class="form-select mb-0 fw-bold" id="userType" name="权限"
@@ -29,4 +31,135 @@
 
         <button type="submit" class="btn btn-primary mb-2 ml-4" id="addUserPhoneBtn">生成Token</button>
     </form>
+</div>
+
+<h1 class="ml-5">管理员</h1>
+<div class="container mx-auto mt-5" style="max-width: 80%;">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <colgroup>
+                <col style="width: 30%">
+                <col style="width: 30%">
+                <col style="width: 40%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>test remaining</th>
+                    <th>AccessToken</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each displayAgent}}
+                <tr>
+                    <td>{{this.username}}</td>
+                    <td>{{this.access_remaining}}</td>
+                    <td>{{this.access_token}}</td>
+                    <td>
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteModal{{this._id}}">Delete</button>
+                        <!-- Delete form modal -->
+                        <div class="modal fade" id="deleteModal{{this._id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="deleteModalLabel{{this._id}}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{this._id}}">Delete Prompt</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this prompt?</p>
+                                        <!-- Delete form -->
+                                        <button type="submit" class="btn btn-danger deleteBtn"
+                                            value={{this._id}}>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<h1 class="ml-5">用户</h1>
+<div class="container mx-auto mt-5" style="max-width: 80%;">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <colgroup>
+                <col style="width: 30%">
+                <col style="width: 30%">
+                <col style="width: 40%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>test remaining</th>
+                    <th>AccessToken</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each displayUser}}
+                <tr>
+                    <td>{{this.username}}</td>
+                    <td>{{this.access_remaining}}</td>
+                    <td>{{this.access_token}}</td>
+                    <td>
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteModal{{this._id}}">Inactivate</button>
+
+                        <div class="modal fade" id="deleteModal{{this._id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="deleteModalLabel{{this._id}}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{this._id}}">Delete Prompt</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this prompt?</p>
+                                        <!-- Delete form -->
+                                        <button type="submit" class="btn btn-danger"
+                                            value={{this._id}}>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteModal{{this._id}}">Delete</button>
+
+                        <div class="modal fade" id="deleteModal{{this._id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="deleteModalLabel{{this._id}}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{this._id}}">Delete Prompt</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this prompt?</p>
+                                        <!-- Delete form -->
+                                        <button type="submit" class="btn btn-danger deleteBtn"
+                                            value={{this._id}}>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>

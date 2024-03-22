@@ -9,6 +9,7 @@ import session from 'express-session';
 import path from 'path';
 import * as dotenv from 'dotenv';
 import { startAuthenticatedSession, endAuthenticatedSession } from './auth.mjs';
+import addAccessToken from './routes/addAccessToken.mjs';
 
 import jwt from 'jsonwebtoken';
 import fetch from 'node-fetch';
@@ -26,6 +27,7 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use("/api", addAccessToken);
 
 
 app.use(session({
@@ -100,7 +102,7 @@ app.get("/login", isNotAuthenticated, (req, res) => {
   res.render('login', { user: req.session.user });
 });
 
-app.get("/createAccessToken", isNotAuthenticated, (req, res) => {
+app.get("/createAccessToken", isNotAuthenticated, async(req, res) => {
   let isAgent = false;
   let isUser = false;
 
@@ -109,7 +111,11 @@ app.get("/createAccessToken", isNotAuthenticated, (req, res) => {
     isAgent = req.session.user.type === 'agent' ? true : false;
     isUser = req.session.user.type === 'user' ? true : false;
   }
-  res.render('createAccessToken', { user: req.session.user });
+
+  const displayUser = await accessTokenRecord.find({ user_type: 'user' });
+  const displayAgent = await accessTokenRecord.find({ user_type: 'agent' });
+  
+  res.render('createAccessToken', { user: req.session.user, displayUser, displayAgent, isAgent, isUser });
 });
 
 
