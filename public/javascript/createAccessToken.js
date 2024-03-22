@@ -29,6 +29,8 @@ async function generateToken() {
     const data = await response.json();
     const {accessToken, message} = data;
     console.log(accessToken, message);
+    // reload page
+    location.reload();
 }
 
 async function handleDelete(event) {
@@ -44,6 +46,47 @@ async function handleDelete(event) {
             userId,
         }),
     });
+
+    const data = await response.json();
+    location.reload();
+}
+
+async function handleInactivate(event) {
+    event.preventDefault();
+    const userId = event.target.value;
+
+    const response = await fetch("/api/inactivateUser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            userId,
+        }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    location.reload();
+}
+
+async function handleActivate(event) {
+    event.preventDefault();
+    const userId = event.target.value;
+
+    const response = await fetch("/api/activateUser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            userId,
+        }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    location.reload();
 }
 
 function main() {
@@ -52,6 +95,16 @@ function main() {
     for (const btn of deleteBtns) {
         btn.addEventListener('click', handleDelete);
         console.log('deleteBtns', btn);
+    }
+    const inactivateBtns = document.getElementsByClassName('inactivateBtn');
+    for (const btn of inactivateBtns) {
+        btn.addEventListener('click', handleInactivate);
+        console.log('inactivateBtns', btn);
+    }
+    const activateBtns = document.getElementsByClassName('activateBtn');
+    for (const btn of activateBtns) {
+        btn.addEventListener('click', handleActivate);
+        console.log('activateBtns', btn);
     }
 }
 

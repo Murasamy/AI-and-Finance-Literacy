@@ -13,6 +13,7 @@ import addAccessToken from './routes/addAccessToken.mjs';
 
 import jwt from 'jsonwebtoken';
 import fetch from 'node-fetch';
+
 // import url from 'url';
 // import { Agent } from 'http';
 
@@ -70,7 +71,7 @@ const isNotAuthenticated = (req, res, next) => {
   if (req.session.user) {
     // console.log('User Loged In', req.session.user)
     // send user a message: you are already logged in, and redirect to home page
-    res.redirect('/aiMainPageModel1');
+    res.redirect('/');
   } else {
     next();
   }
@@ -102,7 +103,39 @@ app.get("/login", isNotAuthenticated, (req, res) => {
   res.render('login', { user: req.session.user });
 });
 
-app.get("/createAccessToken", isNotAuthenticated, async(req, res) => {
+app.post("/accessTokenLogin", isNotAuthenticated, async(req, res) => {
+  const accessToken = sanitize(req.body.accessToken);
+  console.log("Token", accessToken);
+  
+  try{
+    const user = await accessTokenRecord.findOne({ access_token: accessToken });
+
+    // if user not found, send message: Invalid Access Token
+
+    if (!user) {
+      console.log('Invalid Access Token');
+      res.render('login', { message: 'Invalid Access Token' });
+      return;
+    }
+    const userSession = {
+      userId: user._id,
+      username: user.username,
+      type: user.user_type,
+    };
+    await startAuthenticatedSession(req, userSession);
+    console.log('user logged in');
+    res.redirect('/');
+
+  } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      res.render('agentLogin', { message: err.message });
+    } else {
+      throw err;
+    }
+  }
+});
+
+app.get("/createAccessToken", isAuthenticatedAsAgent, async(req, res) => {
   let isAgent = false;
   let isUser = false;
 
@@ -114,11 +147,15 @@ app.get("/createAccessToken", isNotAuthenticated, async(req, res) => {
 
   const displayUser = await accessTokenRecord.find({ user_type: 'user' });
   const displayAgent = await accessTokenRecord.find({ user_type: 'agent' });
-  
+
   res.render('createAccessToken', { user: req.session.user, displayUser, displayAgent, isAgent, isUser });
 });
 
-
+app.post('/logout', async (req, res) => {
+  // console.log("logout")
+  await endAuthenticatedSession(req);
+  res.redirect('/');
+});
 
 
 

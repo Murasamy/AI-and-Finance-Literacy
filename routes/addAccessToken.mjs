@@ -29,4 +29,16 @@ router.post('/deleteUser', async (req, res) => {
     res.json({ success: true });
 });
 
+router.post('/inactivateUser', async (req, res) => {
+    const { userId } = req.body;
+    await accessTokenRecord.updateOne({ _id: userId }, { is_active: false });
+    res.json({ success: true });
+});
+
+router.post('/activateUser', async (req, res) => {
+    const { userId } = req.body;
+    await accessTokenRecord.updateOne({ _id: userId }, { is_active: true });
+    res.json({ success: true });
+});
+
 export default router;
